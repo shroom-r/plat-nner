@@ -1,0 +1,8 @@
+services:
+  db:
+    image: mariadb
+    restart: always
+    envionment:
+      MARIADB_ROOT_PASSWORD: example
+
+
