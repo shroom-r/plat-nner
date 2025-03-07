@@ -44,8 +44,8 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./flaskr
-          target: /code
+          path: ./flaskr/app
+          target: /code/app
     expose:
       - 8000
 
