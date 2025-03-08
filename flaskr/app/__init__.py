@@ -72,10 +72,7 @@ def create_app():
             password = loginForm.password.data
             user = db.session.query(User).filter_by(username=username).first()
             if user is not None and user.check_password(password):
-                user.is_authenticated = True
-                login_user(user)
-                flash("Logged in successfully.")
-                return redirect('/')
+                logUser(user)
             else:
                 loginForm.message = "Impossible de se connecter"
             
@@ -98,9 +95,8 @@ def create_app():
                     newUser.set_password(password)
                     db.session.add(newUser)
                     db.session.commit()
-                    newUser.is_authenticated = True
-                    login_user(newUser)
-                    return redirect('/')
+                    logUser(newUser)
+                    
             elif request.method == "POST":
                 registerForm.message = "Le code secret n'est pas valide"
         elif request.method == "POST":
@@ -115,5 +111,10 @@ def create_app():
             return User(username=user.username, id=user.id, is_authenticated = True)
         else:
             return None
+        
+    def logUser(user):
+        user.is_authenticated = True
+        login_user(user,remember=True)
+        return redirect('/')
     
     return app
