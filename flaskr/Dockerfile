@@ -7,11 +7,14 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 COPY . .
 
-ENV FLASK_APP app/app.py
+ENV FLASK_APP app/
 ENV FLASK_ENV development
 ENV FLASK_DEBUG=1
 ENV FLASK_RUN_PORT 8000
 ENV FLASK_RUN_HOST 0.0.0.0
+ENV DB_DEFAULT_USER defaultUser
+ENV DB_DEFAULT_USER_PASSWORD defaultPassword
+ENV REGISTER_SECRET_CODE secretCode123
 
 EXPOSE 8000
 

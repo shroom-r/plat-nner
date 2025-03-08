@@ -1,2 +1,6 @@
 <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-<p>Hello, world ! </p>
+<p>Hello, world ! Hello {{ current_user.name }} ! </p>
+{% if current_user.is_authenticated %}
+  <div>Current user greetings : </div>
+  <p>Hello {{ current_user.username }} ! </p>
+{% endif %}

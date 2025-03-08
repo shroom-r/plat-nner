@@ -1,6 +1,6 @@
 from sqlalchemy import String, Time, ForeignKey, JSON
 from sqlalchemy.orm import Mapped, mapped_column
-from models.Base import Base
+from app.models.Base import Base
 import json
 
 class EventPost(Base):
