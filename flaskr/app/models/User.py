@@ -9,8 +9,8 @@ class User(Base):
     __tablename__ = "users"
     id:Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(250), unique=True)
-    salt = mapped_column(LargeBinary)
-    password_hash = mapped_column(Text)
+    salt = mapped_column(LargeBinary, nullable=False)
+    password_hash = mapped_column(Text, nullable=False)
 
     is_authenticated = False
     is_active = True
