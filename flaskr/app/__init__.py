@@ -18,7 +18,7 @@ from app.config import TestingConfig, ProductionConfig, DevelopmentConfig
 from flask_migrate import Migrate
 from app.forms.loginForm import LoginForm
 from app.forms.registerForm import RegisterForm
-from flask_login import LoginManager, login_user, login_required
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 from app.models.User import User
 from app.models.Event import Event
@@ -66,6 +66,8 @@ def create_app():
 
     @app.route("/login", methods=['GET', 'POST'])
     def login():
+        if current_user.is_authenticated:
+            return redirect("/")
         loginForm = LoginForm(request.form)
         if loginForm.validate_on_submit():
             username = loginForm.username.data
@@ -73,6 +75,7 @@ def create_app():
             user = db.session.query(User).filter_by(username=username).first()
             if user is not None and user.check_password(password):
                 logUser(user)
+                return redirect('/')
             else:
                 loginForm.message = "Impossible de se connecter"
             
@@ -80,6 +83,8 @@ def create_app():
 
     @app.route("/register", methods=['GET', 'POST'])
     def register():
+        if current_user.is_authenticated:
+            return redirect("/")
         registerForm = RegisterForm(request.form)
         if registerForm.validate_on_submit():
             secretCode = registerForm.secretCode.data
@@ -89,19 +94,25 @@ def create_app():
                 # Check if user exsits in db
                 user = db.session.query(User).filter_by(username=username).first()
                 if user is not None:
-                    registerForm.message = "Ce nom d'user existe déjà"
+                    registerForm.message = "Ce nom d'utilisateur.trice existe déjà"
                 else:
                     newUser = User(username=username)
                     newUser.set_password(password)
                     db.session.add(newUser)
                     db.session.commit()
                     logUser(newUser)
-                    
+                    return redirect('/')
             elif request.method == "POST":
                 registerForm.message = "Le code secret n'est pas valide"
         elif request.method == "POST":
             registerForm.message = "Tous les champs doivent être remplis"
         return render_template("register.html", form = registerForm)
+
+    @app.route("/logout")
+    @login_required
+    def logout():
+        logout_user()
+        return redirect("/")
 
     @loginManager.user_loader
     def load_user(user_id):
@@ -111,10 +122,15 @@ def create_app():
             return User(username=user.username, id=user.id, is_authenticated = True)
         else:
             return None
+
+    @loginManager.unauthorized_handler
+    def redirectUnauthorizedUser():
+        '''Redirects user to the login page if they are unauthorized (not logged in)'''
+        return redirect("/login")
         
     def logUser(user):
         user.is_authenticated = True
         login_user(user,remember=True)
-        return redirect('/')
+        
     
     return app

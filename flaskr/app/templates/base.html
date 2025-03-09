@@ -4,7 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}{% endblock %} - Flaskr</title>
+    <!-- <title>{% block title %}{% endblock %} - Flaskr</title> -->
+    <title>&#127850; Plat-nner</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -13,19 +14,15 @@
   </head>
   <body data-bs-theme="dark" class="overflow-hidden" style="height: 100vh">
     <div class="d-flex flex-column h-100">
-      <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Plat-nner</a>
-        </div>
-      </nav>
+      {% include 'navbar.html' %}
+      
       <div
-        class="d-flex justfiy-self-stretch flex-grow-1 overflow-auto align-items-center justify-content-center container-fluid"
+        class="d-flex justfiy-self-stretch flex-grow-1 overflow-auto container-fluid"
       >
-        <section class="content" style="height: fit-content">
-          <!-- <header>{% block header %}{% endblock %}</header> -->
           {% for message in get_flashed_messages() %}
-          <div class="flash">{{ message }}</div>
-          {% endfor %} {% block content %}{% endblock %}
+            <div class="flash">{{ message }}</div>
+          {% endfor %}
+          {% block content %}{% endblock %}
         </section>
       </div>
     </div>
