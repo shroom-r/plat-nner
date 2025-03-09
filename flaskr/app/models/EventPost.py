@@ -13,4 +13,7 @@ class EventPost(Base):
     attendees = mapped_column(JSON)
 
     def get_attendees(self):
-        return json.loads(self.attendees)['data']
+        if self.attendees:
+            return json.loads(self.attendees)['data']
+        else:
+            return []

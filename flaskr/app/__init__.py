@@ -5,6 +5,7 @@ sys.path.append('../app')
 
 
 import os
+import json
 from flask import Flask
 from flask import render_template, request, redirect, flash
 
@@ -19,6 +20,7 @@ from flask_migrate import Migrate
 from app.forms.loginForm import LoginForm
 from app.forms.registerForm import RegisterForm
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from sqlalchemy import select
 
 from app.models.User import User
 from app.models.Event import Event
@@ -62,7 +64,11 @@ def create_app():
     @app.route("/")
     @login_required
     def index():
-        return render_template('index.html')
+        
+        # Get events and event posts
+        events = db.session.execute(select(Event)).all()
+            
+        return render_template('index.html', events = events)
 
     @app.route("/login", methods=['GET', 'POST'])
     def login():

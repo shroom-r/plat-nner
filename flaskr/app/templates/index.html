@@ -4,4 +4,21 @@
 <div>
   <p>Hello {{ current_user.username }} ! </p>
 </div>
+<div>
+  <ul>
+    {% for event in events %}
+      <li>{{ event[0].name }}</li>
+      <ul>
+        {% for post in event[0].event_posts %}
+          <li>{{ post.name }}</li>
+          <ul>
+            {% for attendee in post.get_attendees() %}
+              <li>{{ attendee }}</li>
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}
