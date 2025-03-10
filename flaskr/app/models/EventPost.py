@@ -17,3 +17,8 @@ class EventPost(Base):
             return json.loads(self.attendees)['data']
         else:
             return []
+    
+    def get_time_string(self):
+        start = self.start_time.strftime('%H:%M') if self.start_time else ""
+        end = self.end_time.strftime('%H:%M') if self.end_time else ""
+        return str(start) + "-" + str(end)

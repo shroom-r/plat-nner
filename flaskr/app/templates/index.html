@@ -1,24 +1,40 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<div class="d-flex w-100 h-100 gap-1">
+  {% for event in events %}
+  <div class="card event-card flex-shrink-0">
+    <div class="card-body">
+      <h5 class="card-title">{{ event[0].date.strftime("%d.%m.%y") }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ event[0].name }}</h6>
 
-{% block content %}
-<div>
-  <p>Hello {{ current_user.username }} ! </p>
-</div>
-<div>
-  <ul>
-    {% for event in events %}
-      <li>{{ event[0].name }}</li>
-      <ul>
+      <ul class="list-group">
         {% for post in event[0].event_posts %}
-          <li>{{ post.name }}</li>
-          <ul>
-            {% for attendee in post.get_attendees() %}
-              <li>{{ attendee }}</li>
-            {% endfor %}
-          </ul>
+        <li
+          class="list-group-item px-1 {{ 'attendees' if post.get_attendees()  else 'no-attendees' }}"
+        >
+          <div class="d-flex justify-content-between">
+            <div class="d-flex flex-column justify-content-between">
+              <div class="post-name">
+                {{ post.name }} {{ post.get_time_string() }}
+              </div>
+              {% if post.get_attendees() %}
+              <div class="attendees-list ps-3 w-100">
+                {% for attendee in post.get_attendees() %}
+                <div>{{ attendee }}</div>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="add-attendee-button-container">
+                <i class="bi-plus-circle add-attendee-button bg-danger"></i>
+              </div>
+            </div>
+          </div>
+        </li>
         {% endfor %}
       </ul>
-    {% endfor %}
-  </ul>
+    </div>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}
