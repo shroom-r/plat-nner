@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired
 
 
 class RegisterForm(FlaskForm):
-    secretCode = StringField("Secret code", validators=[DataRequired()])
+    secretCode = StringField("Secret code", validators=[DataRequired()], render_kw={'autofocus': True})
     username = StringField("Username",validators=[DataRequired()])
     password = PasswordField("Password",validators=[DataRequired()])
     submit = SubmitField("Register")

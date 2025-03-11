@@ -16,7 +16,7 @@ register_bp = Blueprint('register_bp', __name__, template_folder='templates')
 @register_bp.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect("/")
+        return redirect(url_for("index_bp.index"))
     registerForm = RegisterForm(request.form)
     if registerForm.validate_on_submit():
         secretCode = registerForm.secretCode.data

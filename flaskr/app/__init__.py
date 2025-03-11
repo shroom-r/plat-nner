@@ -7,7 +7,7 @@ sys.path.append('../app')
 import os
 import json
 from flask import Flask
-from flask import render_template, request, redirect, flash
+from flask import render_template, request, redirect, flash,url_for
 
 from flask_bootstrap import Bootstrap5
 from flask_wtf import CSRFProtect
@@ -29,7 +29,8 @@ from app.models.EventPost import EventPost
 from app.routes.auth.login import login_bp
 from app.routes.auth.register import register_bp
 from app.routes.auth.logout import logout_bp
-from app.routes.events.index import index_bp
+from app.routes.event import index_bp
+from app.routes.eventPost import eventPost_bp
 
 def create_app():
     app = Flask(__name__)
@@ -37,6 +38,7 @@ def create_app():
     app.register_blueprint(register_bp)
     app.register_blueprint(index_bp)
     app.register_blueprint(logout_bp)
+    app.register_blueprint(eventPost_bp)
 
     secretKey = secrets.token_urlsafe(16)
     app.secret_key = secretKey
@@ -69,6 +71,10 @@ def create_app():
         loginManager.init_app(app)
         # createDefaultUser()
     # return app
+
+    @app.route("/")
+    def appIndex():
+        return redirect(url_for("index_bp.index"))
 
     @loginManager.user_loader
     def load_user(user_id):

@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, url_for
 from flask_login import  current_user
 from app.models.User import User
 from app.forms.loginForm import LoginForm
@@ -11,7 +11,7 @@ login_bp = Blueprint('login_bp', __name__, template_folder='templates')
 @login_bp.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect("/")
+        return redirect(url_for("index_bp.index"))
     loginForm = LoginForm(request.form)
     if loginForm.validate_on_submit():
         username = loginForm.username.data
@@ -19,7 +19,7 @@ def login():
         user = db.session.query(User).filter_by(username=username).first()
         if user is not None and user.check_password(password):
             logUser(user)
-            return redirect('/')
+            return redirect(url_for("index_bp.index"))
         else:
             loginForm.message = "Impossible de se connecter"
         
