@@ -2,8 +2,6 @@ services:
   db:
     # We use a mariadb image which supports both amd64 & arm64 architecture
     image: mariadb:10-focal
-    # If you really want to use MySQL, uncomment the following line
-    #image: mysql:8
     command: '--default-authentication-plugin=mysql_native_password'
     restart: always
     healthcheck:
@@ -20,6 +18,7 @@ services:
     environment:
       - MYSQL_DATABASE=plat_nner_db
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+    
     expose:
       - 3306
       - 33060
@@ -33,8 +32,7 @@ services:
       - db-password
     environment:
       - DATABASE_PASSWORD_FILE=/run/secrets/db-password
-    # ports:
-    #   - 8000:8000
+    env_file: ".env"
     networks:
       - backnet
       - frontnet
@@ -65,17 +63,11 @@ services:
     restart: always
     secrets:
       - db-password
-    # ports:
-    #   - 9080:80
     networks:
       - backnet
       - frontnet
     environment:
-      # MYSQL_ROOT_PASSWORD: example
-      # PMA_PASSWORD_FILE: /run/secrets/db_password
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_password
-      # MYSQL_USER: pma_user
-      # MYSQL_PASSWORD: pma_pw
       PMA_HOST: db
     expose:
       - 80
