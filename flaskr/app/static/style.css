@@ -35,3 +35,12 @@
 .attendees-list > div {
   width: fit-content;
 }
+
+.attendee-container {
+  position: relative
+}
+
+.attendee-delete-button {
+  position: absolute;
+  left: -10px
+}

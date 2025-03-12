@@ -18,10 +18,13 @@
               </div>
               {% if post.get_attendees() %}
               <div class="attendees-list ps-3 w-100">
-                {% for attendee in post.get_attendees_names() %}
-                <div>
-                  <div>x</div>
-                  <div>{{ attendee }}</div>
+                {% for attendee in post.get_attendees() %}
+                <div attendee-id="{{ attendee.id }}" class="attendee-container">
+                  <form class="attendee-delete-form" action="/post/{{post.id}}/attendee/{{attendee.id}}/destroy">
+                    {{ deleteAttendeeForm.csrf_token }}
+                    <button type="submit" class="attendee-delete-icon-container">x</button>
+                  </form>
+                  <div>{{ attendee.name }}</div>
                 </div>
                 {% endfor %}
               </div>
@@ -36,7 +39,7 @@
           <div class="ps-3 w-100">
             <form
               class="addAttendeeForm"
-              action="/event/{{event[0].id}}/post/{{post.id}}/addAttendee"
+              action="/post/{{post.id}}/addAttendee"
               method="POST"
             >
               {{ addAttendeeForm.csrf_token }}
@@ -55,4 +58,5 @@
   {% endfor %}
 </div>
 <script src="{{ url_for('static', filename='addAttendee.js') }}"></script>
+<script src="{{ url_for('static', filename='deleteAttendee.js') }}"></script>
 {% endblock %}

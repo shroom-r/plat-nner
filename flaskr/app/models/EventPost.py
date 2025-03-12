@@ -18,10 +18,10 @@ class EventPost(Base):
         else:
             return []
         
-    def get_attendees_names(self):
-        attendees = self.get_attendees()
-        if attendees:
-            return [attendee['name'] for attendee in attendees]
+    # def get_attendees_names(self):
+    #     attendees = self.get_attendees()
+    #     if attendees:
+    #         return [attendee['name'] for attendee in attendees]
     
     def set_attendees(self, attendeesArr):
         dict = {}
@@ -30,9 +30,19 @@ class EventPost(Base):
         
     def add_attendee(self, name):
         attendees = self.get_attendees()
-        maxId = max(attendees, key=lambda x:x['id'])['id']
-        attendees.append({'id' : (int(maxId)+1), 'name' : name})
+        newId = 0
+        if attendees:
+            maxId = max(attendees, key=lambda x:x['id'])['id']
+            newId = maxId + 1
+        attendees.append({'id' : newId, 'name' : name})
         self.set_attendees(attendees)
+    
+    def remove_attendee(self, id):
+        attendees = self.get_attendees()
+        # Remove attendee by value
+        newAttendees = [attendee for attendee in attendees if str(attendee['id']) != id]
+        self.set_attendees(newAttendees)
+
     
     def get_time_string(self):
         start = self.start_time.strftime('%H:%M') if self.start_time else ""
