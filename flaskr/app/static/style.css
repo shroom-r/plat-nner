@@ -27,7 +27,8 @@
   mask-repeat: no-repeat;
 }
 
-.event-card {
+.event-card,
+.new-event-card {
   width: 15rem;
   height: fit-content !important;
 }
@@ -43,7 +44,7 @@
   cursor: pointer;
 }
 .toggle-add-attendee-form-button:hover .toggle-add-attendee-form-icon {
-  background-color: var(--bs-danger-text-emphasis) !important;
+  background-color: var(--bs-success-text-emphasis) !important;
 }
 
 .toggle-add-attendee-form-icon {

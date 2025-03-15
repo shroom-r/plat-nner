@@ -71,7 +71,7 @@
             <div class="d-flex align-items-center">
               <div class="toggle-add-attendee-form-button">
                 <i
-                  class="bi-plus-circle toggle-add-attendee-form-icon bg-danger"
+                  class="bi-plus-circle toggle-add-attendee-form-icon bg-success"
                 ></i>
               </div>
             </div>
@@ -134,6 +134,16 @@
     </div>
   </div>
   {% endfor %}
+  <div class="card new-event-card flex-shrink-0">
+    <div class="card-body">
+      <form action="">
+        {{ newEventForm.csrf_token }}
+        {{ newEventForm.date(class="form-control") }}
+        {{ newEventForm.name(class="form-control") }}
+        {{ newEventForm.submit(class="btn btn-primary") }}
+      </form>
+    </div>
+  </div>
 </div>
 <script
   type="module"
