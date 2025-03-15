@@ -6,6 +6,7 @@ from app.models.Event import Event
 from app.forms.addAttendee import AddAttendeeForm
 from app.forms.deleteAttendee import DeleteAttendeeForm
 from app.forms.newEventPost import NewEventPost
+from app.forms.deletePost import DeletePostForm
 
 index_bp = Blueprint("index_bp", __name__,template_folder='templates', url_prefix='/event')
 
@@ -17,4 +18,13 @@ def index():
     addAttendeeForm = AddAttendeeForm(request.form)
     deleteAttendeeForm = DeleteAttendeeForm(request.form)
     newEventPostForm = NewEventPost()
-    return render_template('index.html', events = events, addAttendeeForm = addAttendeeForm, deleteAttendeeForm = deleteAttendeeForm, newEventPostForm = newEventPostForm)
+    deletePostForm = DeletePostForm()
+
+    return render_template( \
+        'index.html', \
+        events = events, \
+        addAttendeeForm = addAttendeeForm, \
+        deleteAttendeeForm = deleteAttendeeForm, \
+        newEventPostForm = newEventPostForm, \
+        deletePostForm = deletePostForm, \
+    )

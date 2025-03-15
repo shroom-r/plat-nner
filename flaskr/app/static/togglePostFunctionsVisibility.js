@@ -2,21 +2,22 @@
  * Add click listeners on attendee name to show toggle action buttons visibility
  */
 
-document.querySelectorAll(".attendee-name").forEach((el) => {
+document.querySelectorAll(".toggle-post-functions-button").forEach((el) => {
   el.addEventListener("click", (event) => {
-    var target = event.currentTarget;
+    var target = event.currentTarget.closest(".post-container");
+    // parent = target.closest(".post-container");
     var targetIsSelected = target.classList.contains("selected");
     // Unselect all selected names
     document
-      .querySelectorAll(".attendee-name")
+      .querySelectorAll(".post-container")
       .forEach((el) => el.classList.remove("selected"));
     document
-      .querySelectorAll(".attendee-functions-container")
+      .querySelectorAll(".post-functions-container")
       .forEach((el) => el.classList.add("hidden"));
     if (!targetIsSelected) {
       target.classList.add("selected");
-      target.parentNode
-        .querySelector(".attendee-functions-container")
+      target
+        .querySelector(".post-functions-container")
         .classList.remove("hidden");
     }
   });

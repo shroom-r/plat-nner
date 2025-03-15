@@ -50,6 +50,21 @@ def deleteAttendee_Delete(eventPostId, attendeeId):
         flash("La suppression a échoué")
     return resp
 
+@eventPost_bp.route("/post/<postId>/delete", methods=["DELETE"])
+@login_required
+def deleteEventPost(postId):
+    eventPost = db.session.query(EventPost).filter_by(id=postId).delete()
+    try:
+        db.session.commit()
+        resp = jsonify(success=True)
+    except:
+        print("ERREUR")
+        resp = jsonify(message=""), 500
+    if resp.status_code == 500:
+        flash("La suppression a échoué")
+    print(resp.status_code, flush=True)
+    return resp
+
 def saveEventPost(eventPost):
     db.session.add(eventPost)
     try:

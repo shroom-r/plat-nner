@@ -9,16 +9,38 @@
       <ul class="list-group">
         {% for post in event[0].event_posts %}
         <li
-          class="list-group-item px-1 {{ 'attendees' if post.get_attendees()  else 'no-attendees' }}"
+          class="list-group-item post-container px-1 {{ 'attendees' if post.get_attendees()  else 'no-attendees' }}"
         >
-          <div class="d-flex justify-content-between">
+          <div
+            class="post-functions-container bg-body border border-secondary rounded hidden"
+          >
+            <form class="post-delete-form" action="/post/{{ post.id }}/delete">
+              {{ deletePostForm.csrf_token }}
+              <button type="submit" class="post-delete-button">
+                <i class="post-delete-icon bi-x bg-danger"></i>
+              </button>
+            </form>
+          </div>
+          <div class="d-flex justify-content-between gap-1">
             <div
               class="d-flex flex-column justify-content-between"
-              style="min-width: 0"
+              style="min-width: 0; flex: 1 1"
             >
-              <div class="post-name">
-                {{ post.name }} {{ post.get_time_string() }}
+              <div
+                class="post-title-container d-flex justify-content-between gap-1"
+              >
+                <div class="post-name">
+                  {{ post.name }} {{ post.get_time_string() }}
+                </div>
+                <div>
+                  <button class="toggle-post-functions-button">
+                    <i
+                      class="toggle-post-functions-icon bi-three-dots bg-secondary"
+                    ></i>
+                  </button>
+                </div>
               </div>
+
               {% if post.get_attendees() %}
               <div class="attendees-list ps-3 w-100">
                 {% for attendee in post.get_attendees() %}
@@ -32,7 +54,7 @@
                       <button
                         title="Supprimer"
                         type="submit"
-                        class="attendee-delete-icon-container"
+                        class="attendee-delete-button"
                       >
                         <i class="bi-x attendee-delete-icon bg-danger"></i>
                       </button>
@@ -113,8 +135,32 @@
   </div>
   {% endfor %}
 </div>
-<script src="{{ url_for('static', filename='addAttendee.js') }}"></script>
-<script src="{{ url_for('static', filename='deleteAttendee.js') }}"></script>
-<script src="{{ url_for('static', filename='toggleAttendeeFunctionsVisibility.js') }}"></script>
-<script src="{{ url_for('static', filename='showAddPostForm.js') }}"></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='addAttendee.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='deleteAttendee.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='toggleAttendeeFunctionsVisibility.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='showAddPostForm.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='togglePostFunctionsVisibility.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='initializeElementsVisibility.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='deletePost.js') }}"
+></script>
 {% endblock %}

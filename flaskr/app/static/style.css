@@ -21,6 +21,12 @@
   mask-repeat: no-repeat;
 }
 
+.bi-three-dots {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-three-dots' viewBox='0 0 16 16'%3E%3Cpath d='M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+}
+
 .event-card {
   width: 15rem;
   height: fit-content !important;
@@ -66,7 +72,7 @@
 .attendees {
   padding-top: 0.25rem !important;
 }
-.attendees .post-name {
+.attendees .post-title-container {
   /* writing-mode: sideways-lr;
   text-align: center; */
   font-size: 0.75rem;
@@ -90,13 +96,15 @@
 .attendee-functions-container {
   position: absolute;
   left: 0;
-  height: 20px;
-  width: 20px;
+  /* height: 20px;
+  width: 20px; */
   display: block;
   transform: translate(-100%, 0);
 }
 
-.attendee-delete-icon-container {
+.attendee-delete-button,
+.post-delete-button,
+.toggle-post-functions-button {
   border: none;
   background-color: unset;
   padding: 0;
@@ -108,13 +116,31 @@
   align-items: center;
 }
 
-.attendee-delete-icon {
+.attendee-delete-button,
+.post-delete-button {
+  height: 20px;
+  width: 20px;
+}
+
+.toggle-post-functions-button {
+  height: 1.5em;
+  aspect-ratio: 1;
+}
+
+.toggle-post-functions-button:hover .toggle-post-functions-icon {
+  background-color: var(--bs-secondary-text-emphasis) !important;
+}
+
+.attendee-delete-icon,
+.post-delete-icon,
+.toggle-post-functions-icon {
   display: block;
   height: 100%;
   width: 100%;
 }
 
-.attendee-delete-icon-container:hover {
+.attendee-delete-button:hover,
+.post-delete-button:hover {
   border: 1px solid var(--bs-danger-border-subtle);
   border-radius: 50%;
 }
@@ -126,4 +152,21 @@
   /* padding: 2px 5px; */
   color: var(--bs-success-text-emphasis);
   text-decoration: underline;
+}
+
+.post-container {
+  position: relative;
+}
+
+.post-container.selected {
+  outline: 3px solid var(--bs-success-text-emphasis);
+  z-index: 10;
+  outline-offset: -1px;
+}
+
+.post-functions-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(0, -100%);
 }
