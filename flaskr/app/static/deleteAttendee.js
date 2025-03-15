@@ -1,3 +1,6 @@
+/**Add submit event listener to form.
+ * Fetch API with DELETE method on submit, to delete attendee from eventpost
+ */
 document.querySelectorAll(".attendee-delete-form").forEach((form) =>
   form.addEventListener("submit", (event) => {
     event.preventDefault();
