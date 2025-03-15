@@ -8,13 +8,10 @@ document.querySelectorAll(".attendee-delete-form").forEach((form) =>
     var formData = new FormData(form);
     var url = form.action;
     fetch(url, {
-      method: 'DELETE',
+      method: "DELETE",
       body: formData,
     }).then((response) => {
-      if (response.status == 200) {
-        location.reload()
-      }
-      console.log(response);
+        location.reload();
     });
   })
 );

@@ -12,7 +12,10 @@
           class="list-group-item px-1 {{ 'attendees' if post.get_attendees()  else 'no-attendees' }}"
         >
           <div class="d-flex justify-content-between">
-            <div class="d-flex flex-column justify-content-between" style="min-width: 0;">
+            <div
+              class="d-flex flex-column justify-content-between"
+              style="min-width: 0"
+            >
               <div class="post-name">
                 {{ post.name }} {{ post.get_time_string() }}
               </div>
@@ -35,7 +38,9 @@
                       </button>
                     </form>
                   </div>
-                  <div class="attendee-name">{{ attendee.name }}</div>
+                  <div title="{{ attendee.name }}" class="attendee-name">
+                    {{ attendee.name }}
+                  </div>
                 </div>
                 {% endfor %}
               </div>
@@ -43,7 +48,9 @@
             </div>
             <div class="d-flex align-items-center">
               <div class="toggle-add-attendee-form-button">
-                <i class="bi-plus-circle toggle-add-attendee-form-icon bg-danger"></i>
+                <i
+                  class="bi-plus-circle toggle-add-attendee-form-icon bg-danger"
+                ></i>
               </div>
             </div>
           </div>
@@ -55,12 +62,17 @@
             >
               {{ addAttendeeForm.csrf_token }}
               <div class="input-group">
-                {{ addAttendeeForm.name(class="form-control attendee-name-input",
-                autocomplete="off") }}
-                <button type="submit" class="add-attendee-button btn btn-outline-secondary p-0 d-flex justify-content-center align-items-center">
+                {{ addAttendeeForm.name(class="form-control
+                attendee-name-input", autocomplete="off") }}
+                <button
+                  type="submit"
+                  class="add-attendee-button btn btn-outline-secondary p-0 d-flex justify-content-center align-items-center"
+                >
                   <div class="add-attendee-icon-container">
-                  <i class="add-attendee-icon bi-plus d-block h-100 w-100"></i>
-                </div>
+                    <i
+                      class="add-attendee-icon bi-plus d-block h-100 w-100"
+                    ></i>
+                  </div>
                 </button>
               </div>
             </form>
@@ -68,6 +80,35 @@
         </li>
         {% endfor %}
       </ul>
+      <button
+        class="showNewPostFormButton btn btn-outline-secondary mt-2 w-100"
+      >
+        Ajouter poste
+      </button>
+      <div class="newPostFormContainer mt-2 hidden">
+        <form action="/event/{{event[0].id}}/post/new" method="POST">
+          {{ newEventPostForm.csrf_token }}
+          <div class="mb-1">
+            {{ newEventPostForm.name(class="form-control", autocomplete="off")
+            }}
+          </div>
+          <div class="mb-1">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <div>De</div>
+              <div>
+                {{ newEventPostForm.start_time(class="form-control",
+                autocomplete="off") }}
+              </div>
+              <div>à</div>
+              <div>
+                {{ newEventPostForm.end_time(class="form-control",
+                autocomplete="off") }}
+              </div>
+            </div>
+          </div>
+          <div>{{ newEventPostForm.submit(class="btn btn-primary") }}</div>
+        </form>
+      </div>
     </div>
   </div>
   {% endfor %}
@@ -75,4 +116,5 @@
 <script src="{{ url_for('static', filename='addAttendee.js') }}"></script>
 <script src="{{ url_for('static', filename='deleteAttendee.js') }}"></script>
 <script src="{{ url_for('static', filename='toggleAttendeeFunctionsVisibility.js') }}"></script>
+<script src="{{ url_for('static', filename='showAddPostForm.js') }}"></script>
 {% endblock %}

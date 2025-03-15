@@ -5,6 +5,7 @@ from sqlalchemy import select
 from app.models.Event import Event
 from app.forms.addAttendee import AddAttendeeForm
 from app.forms.deleteAttendee import DeleteAttendeeForm
+from app.forms.newEventPost import NewEventPost
 
 index_bp = Blueprint("index_bp", __name__,template_folder='templates', url_prefix='/event')
 
@@ -15,4 +16,5 @@ def index():
     events = db.session.execute(select(Event)).all()
     addAttendeeForm = AddAttendeeForm(request.form)
     deleteAttendeeForm = DeleteAttendeeForm(request.form)
-    return render_template('index.html', events = events, addAttendeeForm = addAttendeeForm, deleteAttendeeForm = deleteAttendeeForm)
+    newEventPostForm = NewEventPost()
+    return render_template('index.html', events = events, addAttendeeForm = addAttendeeForm, deleteAttendeeForm = deleteAttendeeForm, newEventPostForm = newEventPostForm)
