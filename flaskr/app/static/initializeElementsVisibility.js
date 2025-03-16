@@ -5,7 +5,7 @@
 
 document.addEventListener("keydown", (event) => {
   if (event.key == "Escape") {
-    initializeElementsVisibility()
+    initializeElementsVisibility();
   }
 });
 
@@ -41,5 +41,16 @@ export function initializeElementsVisibility() {
     .forEach((el) => el.classList.remove("selected"));
   document
     .querySelectorAll(".post-functions-container")
+    .forEach((el) => el.classList.add("hidden"));
+
+  // Hide new event form
+  document.querySelector("#new-event-card").classList.add("hidden");
+
+  // Unselect all event cards and hide all function buttons
+  document
+    .querySelectorAll(".event-card")
+    .forEach((el) => el.classList.remove("selected"));
+  document
+    .querySelectorAll(".event-functions-container")
     .forEach((el) => el.classList.add("hidden"));
 }

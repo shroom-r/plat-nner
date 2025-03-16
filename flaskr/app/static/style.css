@@ -28,7 +28,7 @@
 }
 
 .event-card,
-.new-event-card {
+#new-event-card {
   width: 15rem;
   height: fit-content !important;
 }
@@ -105,7 +105,9 @@
 
 .attendee-delete-button,
 .post-delete-button,
-.toggle-post-functions-button {
+.event-delete-button,
+.toggle-post-functions-button,
+.toggle-event-functions-button {
   border: none;
   background-color: unset;
   padding: 0;
@@ -118,7 +120,8 @@
 }
 
 .attendee-delete-button,
-.post-delete-button {
+.post-delete-button,
+.event-delete-button {
   height: 20px;
   width: 20px;
 }
@@ -127,21 +130,29 @@
   height: 1.5em;
   aspect-ratio: 1;
 }
+.toggle-event-functions-button {
+  height: 1em;
+  aspect-ratio: 1;
+}
 
-.toggle-post-functions-button:hover .toggle-post-functions-icon {
+.toggle-post-functions-button:hover .toggle-post-functions-icon,
+.toggle-event-functions-button:hover .toggle-event-functions-icon {
   background-color: var(--bs-secondary-text-emphasis) !important;
 }
 
 .attendee-delete-icon,
 .post-delete-icon,
-.toggle-post-functions-icon {
+.event-delete-icon,
+.toggle-post-functions-icon,
+.toggle-event-functions-icon {
   display: block;
   height: 100%;
   width: 100%;
 }
 
 .attendee-delete-button:hover,
-.post-delete-button:hover {
+.post-delete-button:hover,
+.event-delete-button:hover {
   border: 1px solid var(--bs-danger-border-subtle);
   border-radius: 50%;
 }
@@ -155,11 +166,13 @@
   text-decoration: underline;
 }
 
-.post-container {
+.post-container,
+.event-card {
   position: relative;
 }
 
-.post-container.selected {
+.post-container.selected,
+.event-card.selected {
   outline: 3px solid var(--bs-success-text-emphasis);
   z-index: 10;
   outline-offset: -1px;
@@ -170,4 +183,10 @@
   top: 0;
   right: 0;
   transform: translate(0, -100%);
+}
+
+.event-functions-container {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

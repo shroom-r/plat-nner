@@ -2,17 +2,13 @@
  * Add click listeners on attendee name to show toggle action buttons visibility
  */
 
+import { initializeElementsVisibility } from "./initializeElementsVisibility.js";
+
 document.querySelectorAll(".attendee-name").forEach((el) => {
   el.addEventListener("click", (event) => {
     var target = event.currentTarget;
     var targetIsSelected = target.classList.contains("selected");
-    // Unselect all selected names
-    document
-      .querySelectorAll(".attendee-name")
-      .forEach((el) => el.classList.remove("selected"));
-    document
-      .querySelectorAll(".attendee-functions-container")
-      .forEach((el) => el.classList.add("hidden"));
+    initializeElementsVisibility()
     if (!targetIsSelected) {
       target.classList.add("selected");
       target.parentNode

@@ -2,18 +2,18 @@
  * Add click events to show form button
  * Shows form on click
  */
+
+import { initializeElementsVisibility } from "./initializeElementsVisibility.js";
+
 document.querySelectorAll(".toggle-add-attendee-form-button").forEach((el) =>
   el.addEventListener("click", (event) => {
+
+    initializeElementsVisibility()
+
     var target = event.currentTarget;
-    document
-      .querySelectorAll(".toggle-add-attendee-form-button.hidden")
-      .forEach((el) => el.classList.remove("hidden"));
+    // Hide current toggle button
     target.classList.add("hidden");
     var parent = target.closest("li");
-    // Hide all forms
-    document
-      .querySelectorAll(".addAttendeeFormContainer:not(.hidden)")
-      .forEach((el) => el.classList.add("hidden"));
     // Show wanted form
     var parentForm = parent.querySelector(".addAttendeeFormContainer");
     parentForm.classList.remove("hidden");

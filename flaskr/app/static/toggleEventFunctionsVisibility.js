@@ -1,18 +1,18 @@
 /**
- * Add click listeners on button to toggle post functions visibility
+ * Add click listeners on button to toggle event functions visibility
  */
 
 import { initializeElementsVisibility } from "./initializeElementsVisibility.js";
 
-document.querySelectorAll(".toggle-post-functions-button").forEach((el) => {
+document.querySelectorAll(".toggle-event-functions-button").forEach((el) => {
   el.addEventListener("click", (event) => {
-    var target = event.currentTarget.closest(".post-container");
+    var target = event.currentTarget.closest(".event-card");
     var targetIsSelected = target.classList.contains("selected");
-    initializeElementsVisibility()
+    initializeElementsVisibility();
     if (!targetIsSelected) {
       target.classList.add("selected");
       target
-        .querySelector(".post-functions-container")
+        .querySelector(".event-functions-container")
         .classList.remove("hidden");
     }
   });

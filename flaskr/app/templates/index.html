@@ -1,9 +1,28 @@
 {% extends 'base.html' %} {% block content %}
-<div class="d-flex w-100 h-100 gap-1">
+<div class="d-flex gap-1">
   {% for event in events %}
   <div class="card event-card flex-shrink-0">
+    <div
+      class="event-functions-container bg-body border border-secondary rounded hidden"
+    >
+      <form class="event-delete-form" action="/event/{{ event[0].id }}/delete">
+        {{ deleteEventForm.csrf_token }}
+        <button type="submit" class="event-delete-button">
+          <i class="event-delete-icon bi-x bg-danger"></i>
+        </button>
+      </form>
+    </div>
     <div class="card-body">
-      <h5 class="card-title">{{ event[0].date.strftime("%d.%m.%y") }}</h5>
+      <h5 class="card-title d-flex justify-content-between">
+        <div>{{ event[0].date.strftime("%d.%m.%y") }}</div>
+        <div>
+          <button class="toggle-event-functions-button">
+            <i
+              class="toggle-event-functions-icon bi-three-dots bg-secondary"
+            ></i>
+          </button>
+        </div>
+      </h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ event[0].name }}</h6>
 
       <ul class="list-group">
@@ -110,6 +129,7 @@
       <div class="newPostFormContainer mt-2 hidden">
         <form action="/event/{{event[0].id}}/post/new" method="POST">
           {{ newEventPostForm.csrf_token }}
+          <div><i>Ajouter un poste</i></div>
           <div class="mb-1">
             {{ newEventPostForm.name(class="form-control", autocomplete="off")
             }}
@@ -134,13 +154,19 @@
     </div>
   </div>
   {% endfor %}
-  <div class="card new-event-card flex-shrink-0">
+  <div id="new-event-card" class="card flex-shrink-0 hidden">
     <div class="card-body">
-      <form action="">
+      <form action="/event/new" method="POST" class="d-flex flex-column gap-2">
         {{ newEventForm.csrf_token }}
-        {{ newEventForm.date(class="form-control") }}
-        {{ newEventForm.name(class="form-control") }}
-        {{ newEventForm.submit(class="btn btn-primary") }}
+        <div>
+          {{ newEventForm.date.label(class="form-label m-0") }} {{
+          newEventForm.date(class="form-control") }}
+        </div>
+        <div>
+          {{ newEventForm.name.label(class="form-label m-0") }} {{
+          newEventForm.name(class="form-control") }}
+        </div>
+        <div>{{ newEventForm.submit(class="btn btn-primary") }}</div>
       </form>
     </div>
   </div>
@@ -172,5 +198,21 @@
 <script
   type="module"
   src="{{ url_for('static', filename='deletePost.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='showAddEventForm.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='toggleEventFunctionsVisibility.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='toggleEventFunctionsVisibility.js') }}"
+></script>
+<script
+  type="module"
+  src="{{ url_for('static', filename='deleteEvent.js') }}"
 ></script>
 {% endblock %}

@@ -58,11 +58,9 @@ def deleteEventPost(postId):
         db.session.commit()
         resp = jsonify(success=True)
     except:
-        print("ERREUR")
         resp = jsonify(message=""), 500
     if resp.status_code == 500:
-        flash("La suppression a échoué")
-    print(resp.status_code, flush=True)
+        flash("La suppression du poste a échoué")
     return resp
 
 def saveEventPost(eventPost):

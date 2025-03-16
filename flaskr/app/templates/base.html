@@ -14,16 +14,13 @@
   </head>
   <body data-bs-theme="dark" class="overflow-hidden" style="height: 100vh">
     <div class="d-flex flex-column h-100">
-      {% include 'navbar.html' %}
-      
-      {% for message in get_flashed_messages() %}
-        <div class="flash alert alert-warning">{{ message }}</div>
+      {% include 'navbar.html' %} {% for message in get_flashed_messages() %}
+      <div class="flash alert alert-warning">{{ message }}</div>
       {% endfor %}
       <div
         class="d-flex justfiy-self-stretch flex-grow-1 overflow-auto container-fluid my-1"
       >
-          {% block content %}{% endblock %}
-        </section>
+        {% block content %}{% endblock %}
       </div>
     </div>
   </body>
