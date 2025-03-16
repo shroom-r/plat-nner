@@ -10,10 +10,11 @@ document.querySelectorAll(".showNewPostFormButton").forEach((el) =>
     initializeElementsVisibility()
     var target = event.currentTarget;
     var parent = target.closest(".event-card");
-    // Show wanted form and hide button
+    // Show wanted form, hide button and set focus on first input
     var form = parent.querySelector(".newPostFormContainer");
     form.classList.remove("hidden");
     form.scrollIntoView({ behavior: "smooth"});
     parent.querySelector(".showNewPostFormButton").classList.add("hidden");
+    form.querySelector("input#name").focus()
   })
 );
