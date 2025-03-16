@@ -9,20 +9,26 @@ from app.forms.newEventPost import NewEventPost
 from app.forms.deletePost import DeletePostForm
 from app.forms.newEvent import NewEvent
 from app.forms.deleteEvent import DeleteEventForm
+from app.static.deletePastEventsAndAddNew import deletePastEventsAndCreateNew
 
 index_bp = Blueprint("index_bp", __name__,template_folder='templates', url_prefix='/event')
 
 @index_bp.route("/")
 @login_required
 def index():
+    # Delete passed events and next events if not existing yet
+    deletePastEventsAndCreateNew()
+
     # Get events and event posts
-    events = db.session.execute(select(Event)).all()
+    events = db.session.execute(select(Event).order_by(Event.date)).all()
     addAttendeeForm = AddAttendeeForm(request.form)
     deleteAttendeeForm = DeleteAttendeeForm(request.form)
     newEventPostForm = NewEventPost()
     deletePostForm = DeletePostForm()
     newEventForm = NewEvent()
     deleteEventForm = DeleteEventForm()
+
+
 
     return render_template( \
         'index.html', \
@@ -40,9 +46,8 @@ def index():
 def newEvent():
     form = NewEvent(request.form)
     if form.validate_on_submit() and request.method=="POST":
-        event = Event(date = form.date.data)
-        if form.name.data:
-            event.name = form.name.data
+        print(form.date.data, flush=True)
+        event = Event(date = form.date.data, name = form.name.data)
         resp = saveEvent(event)
         if resp.status_code == 500:
             flash("La création d'un nouvel évènement a échoué")
