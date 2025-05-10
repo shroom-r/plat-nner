@@ -11,8 +11,6 @@ services:
       start_period: 30s
     secrets:
       - db-password
-    volumes:
-      - db-data:/var/lib/mysql
     networks:
       - backnet
     environment:
@@ -39,11 +37,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    develop:
-      watch:
-        - action: sync
-          path: ./flaskr/app
-          target: /code/app
     expose:
       - 8000
 
@@ -67,13 +60,10 @@ services:
       - backnet
       - frontnet
     environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db-password
       PMA_HOST: db
     expose:
       - 80
-
-volumes:
-  db-data:
 
 secrets:
   db-password:

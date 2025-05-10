@@ -1,0 +1,18 @@
+volumes:
+  db-data:
+
+services:
+  db:
+    volumes:
+      - db-data:/var/lib/mysql
+  
+  backend:
+    build:
+      args:
+        - FLASK_ENV=development
+        - FLASK_DEBUG=1
+    develop:
+      watch:
+        - action: sync
+          path: ./flaskr/app
+          target: /code/app

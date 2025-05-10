@@ -6,7 +6,7 @@ Rafael Teixeira
 ## Description
 Plat-nner is a simple planning app allowing users to add events, event posts and a list of person for each post.
 
-The goal is to have a small dockable app usable by small teams.
+The goal is to have a small dockable app usable by small teams. All the members of the team that access the app see the same events displayed.
 
 ## Dependencies
 ### Python packages :
@@ -21,7 +21,27 @@ The goal is to have a small dockable app usable by small teams.
 ### Docker compose :
 Based on awesome-compose nginx-flask-mysql ([LINK](https://github.com/docker/awesome-compose/tree/master/nginx-flask-mysql))
 
-Personalized based on the goals and needs of the project
+Customized for needs of the project
+
+Docker-compose builds 4 containers :
+- Backend (flaskr)
+- Db : mariaDB
+- Proxy : Nginx
+- Phpmyadmin
+
+## Install locally
+1. Install Python. The app is build on Python 3.13
+2. Clone the repository
+3. Go to the created folder and run the commands :
+```bash
+docker compose -f compose.yaml -f compose.dev.yaml build
+docker compose -f compose.yaml -f compose.dev.yaml up -d
+```
+4. In a browser, go to localhost
+5. Start using the app
+6. To use phpmyadmin, go to localhost:8080
+
+The compose.dev.yaml file defines development config. For production, don't use it and create dedicated file replacing the values and replacing compose.dev.yaml in the above commands
 
 ## Setup docker files
 ### Create files with environment variables
