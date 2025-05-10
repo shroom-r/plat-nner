@@ -5,6 +5,11 @@ services:
   db:
     volumes:
       - db-data:/var/lib/mysql
+
+  proxy:
+    ports:
+      - 80:80
+      - 8080:8080
   
   backend:
     build:

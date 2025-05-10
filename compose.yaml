@@ -46,9 +46,6 @@ services:
     container_name: platnner_proxy
     build: nginx
     restart: always
-    ports:
-      - 80:80
-      - 8080:8080
     depends_on: 
       - backend
     networks:
