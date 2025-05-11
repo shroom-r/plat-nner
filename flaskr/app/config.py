@@ -17,7 +17,7 @@ class Config(object):
 
 class ProductionConfig(Config):
     try:
-        with open(os.environ.get("DATABASE_PASSWORD_FILE"), "rw") as f:
+        with open(os.environ.get("DATABASE_PASSWORD_FILE"), "r") as f:
             databasePassword = f.read()
             SQLALCHEMY_DATABASE_URI = f"mysql+mysqlconnector://root:{databasePassword}@db/plat_nner_db"
     except Exception as e:
