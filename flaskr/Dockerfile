@@ -18,4 +18,4 @@ ENV FLASK_RUN_HOST 0.0.0.0
 
 EXPOSE 8000
 
-CMD flask db upgrade && flask run
+CMD flask db upgrade && gunicorn --config ./app/gunicorn_config.py "app:create_app()"

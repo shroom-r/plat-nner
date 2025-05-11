@@ -16,6 +16,7 @@ services:
       args:
         - FLASK_ENV=development
         - FLASK_DEBUG=1
+    # Development code sync on modification. Run docker-compose command with --watch argument
     develop:
       watch:
         - action: sync

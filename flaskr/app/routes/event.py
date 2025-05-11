@@ -43,10 +43,10 @@ def newEvent():
         event = Event(date = form.date.data)
         if form.name.data:
             event.name = form.name.data
-        resp = saveEvent(event)
-        if resp.status_code == 500:
+        try:
+            resp = saveEvent(event)
+        except:
             flash("La création d'un nouvel évènement a échoué")
-        # return resp
     return redirect("/")
 
 @index_bp.route("/<eventId>/delete", methods=["DELETE"])
@@ -68,5 +68,5 @@ def saveEvent(event):
         db.session.commit()
         resp = jsonify(success=True)
     except:
-        resp = jsonify(message=""), 500
+        raise
     return resp

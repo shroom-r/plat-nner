@@ -20,10 +20,10 @@ def newPost(eventId):
             eventPost.start_time = form.start_time.data
         if form.end_time.data:
             eventPost.end_time = form.end_time.data
-        resp = saveEventPost(eventPost)
-        if resp.status_code == 500:
+        try:
+            resp = saveEventPost(eventPost)
+        except:
             flash("La création d'un nouveau poste a échoué")
-        # return resp
     return redirect("/")
 
 @eventPost_bp.route("/post/<eventPostId>/addAttendee",methods=["GET","POST"])
@@ -33,10 +33,10 @@ def addAttendee_Post(eventPostId):
     if form.validate_on_submit() and request.method =="POST":
         eventPost = db.session.query(EventPost).filter_by(id=eventPostId).first()
         eventPost.add_attendee(form.name.data)
-        resp = saveEventPost(eventPost)
-        if resp.status_code == 500:
-            flash("L'ajout d'une personne a échoué")
-        # return resp
+        try:
+            resp = saveEventPost(eventPost)
+        except:
+            flash("La création d'un nouveau poste a échoué")
     return redirect("/")
 
 
@@ -45,9 +45,10 @@ def addAttendee_Post(eventPostId):
 def deleteAttendee_Delete(eventPostId, attendeeId):
     eventPost = db.session.query(EventPost).filter_by(id=eventPostId).first()
     eventPost.remove_attendee(attendeeId)
-    resp = saveEventPost(eventPost)
-    if resp.status_code == 500:
-        flash("La suppression a échoué")
+    try:
+        resp = saveEventPost(eventPost)
+    except:
+        flash("La création d'un nouveau poste a échoué")
     return resp
 
 @eventPost_bp.route("/post/<postId>/delete", methods=["DELETE"])
@@ -59,7 +60,6 @@ def deleteEventPost(postId):
         resp = jsonify(success=True)
     except:
         resp = jsonify(message=""), 500
-    if resp.status_code == 500:
         flash("La suppression du poste a échoué")
     return resp
 
@@ -69,5 +69,5 @@ def saveEventPost(eventPost):
         db.session.commit()
         resp = jsonify(success=True)
     except:
-        resp = jsonify(message=""), 500
+        raise
     return resp

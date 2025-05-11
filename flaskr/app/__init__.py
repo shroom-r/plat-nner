@@ -40,9 +40,6 @@ def create_app():
     app.register_blueprint(logout_bp)
     app.register_blueprint(eventPost_bp)
 
-    secretKey = secrets.token_urlsafe(16)
-    app.secret_key = secretKey
-
     bootstrap = Bootstrap5(app)
     csrf = CSRFProtect(app)
     csrf.init_app(app)
